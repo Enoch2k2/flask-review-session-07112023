@@ -9,7 +9,7 @@ import Errors from './components/errors/Errors';
 
 function App() {
   const [users, setUsers] = useState([])
-  const [errors, setErrors] = useState(null);
+  const [errors, setErrors] = useState([]);
 
   useEffect(() => {
     fetch("/api/users")

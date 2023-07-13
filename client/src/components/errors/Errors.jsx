@@ -1,10 +1,11 @@
 import React from 'react'
 
 const Errors = ({ errors }) => {
-  const displayErrors = <p>{errors}</p>
+  const errorLi = errors.map((err, idx) => <li key={idx}>{err}</li>)
+  const displayErrors = <ul>{errorLi}</ul>
   return (
     <>
-      { errors ? displayErrors : null }
+      { errors.length > 0 ? displayErrors : null }
     </>
   )
 }

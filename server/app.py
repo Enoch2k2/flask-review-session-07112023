@@ -39,9 +39,9 @@ class Signup(Resource):
         except ValueError as e:
             db.session.rollback()
             return {'error': str(e)}, 422
-        except TypeError:
-            db.session.rollback()
-            return {'error': "Username must exist"}, 422
+        # except TypeError as e:
+        #     db.session.rollback()
+        #     return {'error': "Username must exist"}, 422
         finally:
             db.session.close()
 

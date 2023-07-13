@@ -9,9 +9,11 @@ const Signup = ({ addUser, setErrors }) => {
 
   useEffect(() => {
     return () => {
-      setErrors(null);
+      setErrors([]);
     }
   }, [])
+
+
 
   const formSchema = yup.object().shape({
     username: yup.string().required("Must enter a username"),
@@ -35,7 +37,7 @@ const Signup = ({ addUser, setErrors }) => {
       })
         .then(resp => {
           if(resp.status !== 201) {
-            resp.json().then(data => setErrors(data.error))
+            resp.json().then(data => setErrors([data.error]))
           }
           else {
             resp.json().then(data => {
@@ -47,6 +49,17 @@ const Signup = ({ addUser, setErrors }) => {
     }
   })
 
+  useEffect(() => {
+    const filteredErrors = Object.values(formik.errors).filter(err => err.length > 0)
+
+    if(filteredErrors.length > 0) {
+      setErrors(filteredErrors);
+    } else {
+      setErrors([])
+    }
+
+  }, [formik.errors])
+
   return (
     <div>
       <h1>Signup</h1>
@@ -54,12 +67,12 @@ const Signup = ({ addUser, setErrors }) => {
         <div>
           <label htmlFor="username">Username: </label>
           <input type="text" name="username" id="username" value={formik.values.username} onChange={ formik.handleChange } />
-          <p style={{ color: "red" }}> {formik.errors.username}</p>
+          {/* <p style={{ color: "red" }}> {formik.errors.username}</p> */}
         </div>
         <div>
           <label htmlFor="password">Password: </label>
           <input type="password" name="password" id="password" value={formik.values.password} onChange={ formik.handleChange } />
-          <p style={{ color: "red" }}> {formik.errors.password}</p>
+          {/* <p style={{ color: "red" }}> {formik.errors.password}</p> */}
         </div>
 
         <input type="submit" value="Create Account" />

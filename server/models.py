@@ -33,6 +33,8 @@ class User(db.Model, SerializerMixin):
 
     @validates('username')
     def validate_username(self, key, username):
-        if len(username) < 3:
+        if not username:
+            raise ValueError("Username must exist")
+        elif len(username) < 3:
             raise ValueError("Username must be at least 3 characters long")
         return username
